@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Random;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(MessageEvent event) {
         View text1 = findViewById(R.id.text1);
         int color = event.getValue();
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i <= 10; i++) {
                     SystemClock.sleep(2000);
                     Random rnd = new Random();
-                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                    int color = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
                     EventBus.getDefault().post(new MessageEvent(color));
                 }
             }
